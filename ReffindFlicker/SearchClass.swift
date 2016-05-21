@@ -8,8 +8,10 @@
 
 import Foundation
 
-let key    = "cafcad0cc18648c2739dfcd329c52494"
-let secret = "776a0450b5509836"
+let key         = "cafcad0cc18648c2739dfcd329c52494"
+let secret      = "776a0450b5509836"
+let imageClass  = ImageClass()
+
 class SearchClass: NSObject {
     
     func search(param: String, completionHandler: (result: NSArray) -> Void) {
@@ -29,7 +31,7 @@ class SearchClass: NSObject {
             do {
                 photos = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as! NSDictionary
             } catch  {
-                print("error parsing response from POST on /categories")
+                print("No Data!")
                 return
             }
             //print(photos.objectForKey("photos")?.objectForKey("photo")!)

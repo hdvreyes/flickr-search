@@ -10,8 +10,9 @@ import UIKit
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    let searchClass = SearchClass()
-    let cellIdentifier = "CellIdentifier"
+    let searchClass     = SearchClass()
+    let imageClass      = ImageClass()
+    let cellIdentifier  = "CellIdentifier"
     var numberOfRows: Int = 0;
     
     
@@ -48,11 +49,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
     
     func loadTableData(data: NSArray){
-        imageArray   = data
+        self.imageArray   = data
         //print(imageArray.objectAtIndex(0))
-        numberOfRows =  data.count
-        print(numberOfRows)
+        self.numberOfRows =  data.count
+        print(self.numberOfRows)
         //self.tableView.reloadData()
+        
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             self.tableView.reloadData()
         })
@@ -66,14 +68,30 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 
         let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath : indexPath) as UITableViewCell
+        //let cell = self.tableView.cellForRowAtIndexPath(indexPath)! as UITableViewCell
         
         let searchInfo = imageArray.objectAtIndex(indexPath.row) as! NSDictionary
+        
+        // Placeholder
+        cell.imageView?.image = UIImage(named: "loading-panda")
+        
+        self.imageClass.getThumbnailImage(searchInfo, completionHandler: { result in
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                cell.imageView?.image = result
+                cell.setNeedsLayout()
+            })
+        })
+        
         print(searchInfo)
         
         // Now lets display the title on the cell
         cell.textLabel!.text = searchInfo.objectForKey("title") as? String
         
         return cell
+    }
+    
+    func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+        
     }
     
     func searchFlickr(param: String)->AnyObject{
