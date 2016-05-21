@@ -16,6 +16,7 @@
 		27C9C7ED1CEC1AB0009B97A7 /* ReffindFlickerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C9C7EC1CEC1AB0009B97A7 /* ReffindFlickerTests.swift */; };
 		27C9C7F81CEC1AB0009B97A7 /* ReffindFlickerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C9C7F71CEC1AB0009B97A7 /* ReffindFlickerUITests.swift */; };
 		27C9C8081CEC4AC5009B97A7 /* SearchClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C9C8071CEC4AC5009B97A7 /* SearchClass.swift */; };
+		27C9C80A1CF0804E009B97A7 /* ImageClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C9C8091CF0804E009B97A7 /* ImageClass.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		27C9C7F71CEC1AB0009B97A7 /* ReffindFlickerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReffindFlickerUITests.swift; sourceTree = "<group>"; };
 		27C9C7F91CEC1AB0009B97A7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		27C9C8071CEC4AC5009B97A7 /* SearchClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchClass.swift; sourceTree = "<group>"; };
+		27C9C8091CF0804E009B97A7 /* ImageClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageClass.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +106,7 @@
 				27C9C7D41CEC1AB0009B97A7 /* AppDelegate.swift */,
 				27C9C7D61CEC1AB0009B97A7 /* ViewController.swift */,
 				27C9C8071CEC4AC5009B97A7 /* SearchClass.swift */,
+				27C9C8091CF0804E009B97A7 /* ImageClass.swift */,
 				27C9C7D81CEC1AB0009B97A7 /* Main.storyboard */,
 				27C9C7DE1CEC1AB0009B97A7 /* Assets.xcassets */,
 				27C9C7E01CEC1AB0009B97A7 /* LaunchScreen.storyboard */,
@@ -264,6 +267,7 @@
 			files = (
 				27C9C8081CEC4AC5009B97A7 /* SearchClass.swift in Sources */,
 				27C9C7D71CEC1AB0009B97A7 /* ViewController.swift in Sources */,
+				27C9C80A1CF0804E009B97A7 /* ImageClass.swift in Sources */,
 				27C9C7DD1CEC1AB0009B97A7 /* ReffindFlicker.xcdatamodeld in Sources */,
 				27C9C7D51CEC1AB0009B97A7 /* AppDelegate.swift in Sources */,
 			);

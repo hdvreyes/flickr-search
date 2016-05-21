@@ -7,13 +7,19 @@
 //
 
 import UIKit
-class ViewController: UIViewController {
+
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     let searchClass = SearchClass()
-
+    let cellIdentifier = "CellIdentifier"
+    var numberOfRows: Int = 0;
+    
+    
+    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchField: UITextField!
     
     
+    var imageArray: NSArray!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,7 +48,32 @@ class ViewController: UIViewController {
 
     
     func loadTableData(data: NSArray){
-        data.count;
+        imageArray   = data
+        //print(imageArray.objectAtIndex(0))
+        numberOfRows =  data.count
+        print(numberOfRows)
+        //self.tableView.reloadData()
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            self.tableView.reloadData()
+        })
+    }
+    
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return numberOfRows
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+
+        let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath : indexPath) as UITableViewCell
+        
+        let searchInfo = imageArray.objectAtIndex(indexPath.row) as! NSDictionary
+        print(searchInfo)
+        
+        // Now lets display the title on the cell
+        cell.textLabel!.text = searchInfo.objectForKey("title") as? String
+        
+        return cell
     }
     
     func searchFlickr(param: String)->AnyObject{
