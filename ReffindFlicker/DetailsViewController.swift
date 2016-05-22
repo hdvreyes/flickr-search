@@ -21,6 +21,8 @@ class DetailsViewController: UIViewController {
     @IBOutlet weak var farm: UILabel!
     @IBOutlet weak var server: UILabel!
     @IBOutlet weak var des: UILabel!
+    @IBOutlet var photoID: UILabel!
+    @IBOutlet var owner: UILabel!
     
     override func viewDidLoad() {
         print(photoDetails)
@@ -32,7 +34,17 @@ class DetailsViewController: UIViewController {
         
         imageClass.getImage(photoDetails, imageSize: "n", completionHandler: { result in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                
+                    // Sets the image
                     self.fullImage.image = result
+                
+                    // Set the details
+                    self.des.text =  self.photoDetails.objectForKey("title") as? String
+                    self.farm.text =  String(self.photoDetails.objectForKey("farm")!)
+                    self.photoID.text =  self.photoDetails.objectForKey("id") as? String
+                    self.owner.text =  self.photoDetails.objectForKey("owner") as? String
+                    self.server.text =  self.photoDetails.objectForKey("server") as? String
+                
                 })
             // Lets stop the loader and dispose
             loader.stopAnimating()

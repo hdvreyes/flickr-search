@@ -22,9 +22,7 @@ class SearchClass: NSObject {
         
         
         let task = NSURLSession.sharedSession().dataTaskWithRequest(NSURLRequest(URL: flickerUrl), completionHandler: { data, response, error -> Void in
-            //print("\(response)\(error)")
             
-            //let result = NSString(data: data!, encoding: NSUTF8StringEncoding)!
             let photos: NSDictionary
             let stripped: NSArray
             
@@ -34,27 +32,11 @@ class SearchClass: NSObject {
                 print("No Data!")
                 return
             }
-            //print(photos.objectForKey("photos")?.objectForKey("photo")!)
             stripped = photos.objectForKey("photos")!.objectForKey("photo")! as! NSArray
             completionHandler(result: stripped)
             return
         })
         task.resume();
-        
-        
-        //print("Hello \(param)")
-        //let url = self.searchUrl(param)
-        
-        //print(url)
-        
-//        let p = self.queryUrl(url, completionHandler: { result in
-//            //print("hello -> \(result)");
-//            data = result
-//            
-//            return
-//         })
-        
-        
         
         return
         
@@ -83,15 +65,4 @@ class SearchClass: NSObject {
         task.resume();
     }
     
-    private func searchUrl(string: NSString)->NSURL{
-        
-        let paramEncode = string.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet())!
-        
-        let flickerUrl = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=\(key)&text=\(paramEncode)&per_page=50&format=json&nojsoncallback=1"
-        
-        //https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=cafcad0cc18648c2739dfcd329c52494&format=rest&text=cats
-        
-        return NSURL(string:flickerUrl)!
-        
-    }
 }

@@ -34,7 +34,6 @@ class ImageClass: NSObject {
         self.queryImage(imageUrl, completion: { image, error in
             completionHandler(result: image)
         })
-        print(imageUrl)
 //        http://farm8.staticflickr.com/7579/27086100105_edc7a92306.jpg
     }
     

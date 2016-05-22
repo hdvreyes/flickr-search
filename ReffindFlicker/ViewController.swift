@@ -16,7 +16,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     let cellIdentifier  = "CellIdentifier"
     var numberOfRows: Int = 0;
-    
+    var loader: UIActivityIndicatorView!
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchField: UITextField!
@@ -34,33 +34,39 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let searchValue = self.searchField.text!
         
         if !searchValue.isEmpty {
-            //self.searchFlickr(searchValue)
-//            let g = searchClass.search(searchValue)
             
-//            print(g)
+            //Loads the activity indicator
+            self.loader = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
+            self.loader.center = tableView.center
+            self.loader.startAnimating()
+            tableView.addSubview(loader)
+            
+            // Call on the search class
             self.searchClass.search(searchValue, completionHandler: { result in
-                //print("hello -> \(result)");
                 self.loadTableData(result)
             })
             
         }else{
             print("Empty")
+            self.showAlert("Aww, snap!", message:"Can't think of anything to search?")
         }
         
     }
 
     
     func loadTableData(data: NSArray){
+        
         self.imageArray   = data
-        //print(imageArray.objectAtIndex(0))
         self.numberOfRows =  data.count
-        print(self.numberOfRows)
-        //self.tableView.reloadData()
         
         // Let's reload the table shall we?
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             
             self.tableView.reloadData()
+            
+            // Stop indicator when cell loads
+            self.loader.stopAnimating()
+
         })
     }
     
@@ -96,33 +102,18 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        //let storyboard = UIStoryboard(name: "Details", bundle: nil)
-
-        //let controller = storyboard.instantiateViewControllerWithIdentifier("DetailViewIdentifier")
-        
-        //let board = UIStoryboard.instantiateViewControllerWithIdentifier("") as! self.navigationController
-        
-        
-        //self.navigationController?.pushViewController(controller, animated: false);
-        // Lets pass all the details
-        //detailsViewController.photoDetails = imageArray.objectAtIndex(indexPath.row) as! NSDictionary
-        //print(imageArray.objectAtIndex(indexPath.row))
-        //detailsViewController.test = "test"
-        //let next = self.storyboard!.instantiateViewControllerWithIdentifier("DetailViewIdentifier")
-        
-       // self.presentViewController(next!, animated: false, completion: nil)
-        //self.navigationController!.pushViewController(next, animated: true);
-        
-        //let destination = UIViewController() // Your destination
-        //self.navigationController?.pushViewController(detailsViewController, animated: true)
-        
         
         let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
         let destination = storyboard.instantiateViewControllerWithIdentifier("DetailViewIdentifier") as! DetailsViewController
         destination.photoDetails = imageArray.objectAtIndex(indexPath.row) as! NSDictionary
         navigationController?.pushViewController(destination, animated: true)
-
         
+    }
+    
+    func showAlert(title: String, message: String){
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "Uhm, Okay!", style:UIAlertActionStyle.Default, handler: nil))
+        self.presentViewController(alert, animated:true, completion:nil)
     }
     
     func searchFlickr(param: String)->AnyObject{
@@ -132,6 +123,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         return data
         
     }
+    
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
