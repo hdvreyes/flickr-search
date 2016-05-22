@@ -13,7 +13,7 @@ class ImageClass: NSObject {
     
     // Lets define all the variable we need to recycle them thru the methods
     var imageUrl : NSURL!
-    var flickerImage : UIImage!
+    var flickerImage : UIImage! = nil
     var farm     = ""
     var server   = ""
     var photoID  = ""
@@ -21,13 +21,13 @@ class ImageClass: NSObject {
     var size     = ""
     
     
-    func getThumbnailImage(details: NSDictionary, completionHandler:(result: UIImage) -> Void) {
+    func getImage(details: NSDictionary, imageSize: String, completionHandler:(result: UIImage) -> Void) {
         
         farm    = String(details.objectForKey("farm")!)
         server  = details.objectForKey("server") as! String
         photoID = details.objectForKey("id") as! String
         secret  = details.objectForKey("secret") as! String
-        size    = "t"
+        size    = imageSize
         
         imageUrl = NSURL(string: "https://farm\(farm).staticflickr.com/\(server)/\(photoID)_\(secret)_\(size).jpg")!
 

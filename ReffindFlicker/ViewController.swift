@@ -10,8 +10,10 @@ import UIKit
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    let searchClass     = SearchClass()
-    let imageClass      = ImageClass()
+    let searchClass           = SearchClass()
+    let imageClass            = ImageClass()
+    let detailsViewController = DetailsViewController()
+    
     let cellIdentifier  = "CellIdentifier"
     var numberOfRows: Int = 0;
     
@@ -55,7 +57,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         print(self.numberOfRows)
         //self.tableView.reloadData()
         
+        // Let's reload the table shall we?
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            
             self.tableView.reloadData()
         })
     }
@@ -75,7 +79,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         // Placeholder
         cell.imageView?.image = UIImage(named: "loading-panda")
         
-        self.imageClass.getThumbnailImage(searchInfo, completionHandler: { result in
+        self.imageClass.getImage(searchInfo, imageSize: "q", completionHandler: { result in
+            // We need to dispatch cell loader to main queue, this will avoid hanging
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 cell.imageView?.image = result
                 cell.setNeedsLayout()
@@ -90,7 +95,33 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         return cell
     }
     
-    func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        //let storyboard = UIStoryboard(name: "Details", bundle: nil)
+
+        //let controller = storyboard.instantiateViewControllerWithIdentifier("DetailViewIdentifier")
+        
+        //let board = UIStoryboard.instantiateViewControllerWithIdentifier("") as! self.navigationController
+        
+        
+        //self.navigationController?.pushViewController(controller, animated: false);
+        // Lets pass all the details
+        //detailsViewController.photoDetails = imageArray.objectAtIndex(indexPath.row) as! NSDictionary
+        //print(imageArray.objectAtIndex(indexPath.row))
+        //detailsViewController.test = "test"
+        //let next = self.storyboard!.instantiateViewControllerWithIdentifier("DetailViewIdentifier")
+        
+       // self.presentViewController(next!, animated: false, completion: nil)
+        //self.navigationController!.pushViewController(next, animated: true);
+        
+        //let destination = UIViewController() // Your destination
+        //self.navigationController?.pushViewController(detailsViewController, animated: true)
+        
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        let destination = storyboard.instantiateViewControllerWithIdentifier("DetailViewIdentifier") as! DetailsViewController
+        destination.photoDetails = imageArray.objectAtIndex(indexPath.row) as! NSDictionary
+        navigationController?.pushViewController(destination, animated: true)
+
         
     }
     
